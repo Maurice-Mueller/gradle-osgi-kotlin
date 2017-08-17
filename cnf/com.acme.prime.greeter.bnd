@@ -1,0 +1,8 @@
+version: 1.0.0
+
+-classpath:		../build/libs/com.acme.prime-${version}-dev.jar
+-output: ../build/libs/com.acme.prime-bnd.jar
+
+Export-Package: com.acme.prime.services;version=${version}
+Bundle-Version:	${version}.${tstamp}
+Bundle-Description: My nice greeter
