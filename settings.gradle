@@ -1,2 +1,5 @@
 rootProject.name = 'gradle-osgi'
 
+include 'service'
+include 'consumer'
+
