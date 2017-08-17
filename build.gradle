@@ -1,3 +1,5 @@
+import aQute.bnd.gradle.Bundle
+
 buildscript {
 
   repositories {
@@ -19,9 +21,9 @@ plugins {
 
 apply {
   plugin("org.junit.platform.gradle.plugin")
-  //plugin("org.jayware.osgi-ds")
-  //plugin("biz.aQute.bnd.workspace")
-  //plugin("biz.aQute.bnd.builder")
+  plugin("org.jayware.osgi-ds")
+  plugin("biz.aQute.bnd.workspace")
+  plugin("biz.aQute.bnd.builder")
 }
 
 project.version = "1.0.0-dev"
@@ -39,7 +41,7 @@ sourceSets {
 }
 
 dependencies {
-  compile "org.jetbrains.kotlin:kotlin-stdlib"
+  compile "org.jetbrains.kotlin:kotlin-osgi-bundle:$kotlinVersion"
   compile("org.apache.cxf:cxf-rt-frontend-jaxrs:${cxfVersion}")
   compile("org.apache.cxf:cxf-rt-transports-http:${cxfVersion}")
   compile("org.apache.cxf:cxf-rt-transports-http-jetty:${cxfVersion}")
@@ -48,7 +50,6 @@ dependencies {
   compile("org.osgi:org.osgi.core:${osgiVersion}")
   compile("org.osgi:osgi.cmpn:${osgiVersion}")
   testCompile("org.jetbrains.kotlin:kotlin-test:${kotlinVersion}")
-  testCompile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
   testCompile("org.jetbrains.spek:spek-api:${spekVersion}")
   testCompile("org.junit.platform:junit-platform-launcher:${junitVersion}")
   testRuntime("org.jetbrains.spek:spek-junit-platform-engine:${junitVersion}")
@@ -139,9 +140,15 @@ tasks {
 }
 
 task(copyJarToDocker, type: Exec) {
-  commandLine = ["docker", "cp", "build/libs/${project.name}-fat-1.0.0-dev.jar", "${karafDockerContainerName}:/opt/karaf/builds/"]
+  commandLine = ["docker", "cp", "build/libs/${project.name}-${project.version}.jar", "${karafDockerContainerName}:/opt/karaf/builds/"]
 }
 
 task wrapper(type: Wrapper) {
   gradleVersion = '4.1'
+}
+
+task bundle(type: Bundle) {
+  from sourceSets.main.output
+  sourceSet = sourceSets.main
+  bndfile = 'cnf/com.acme.prime.greeter.bnd'
 }

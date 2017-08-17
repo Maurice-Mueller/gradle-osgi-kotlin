@@ -1,8 +1,8 @@
 version: 1.0.0
 
--classpath:		../build/libs/com.acme.prime-${version}-dev.jar
--output: ../build/libs/com.acme.prime-bnd.jar
+-output: ../build/bundle/com.acme.prime.greeter-${version}.jar
 
-Export-Package: com.acme.prime.services;version=${version}
+Export-Package: com.acme.prime.services;version=${version}, !kotlin
+Import-Package: !kotlin, *
 Bundle-Version:	${version}.${tstamp}
 Bundle-Description: My nice greeter
