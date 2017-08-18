@@ -6,7 +6,7 @@ import org.osgi.service.component.annotations.Component
 import org.osgi.service.component.annotations.Deactivate
 
 
-@Component(immediate = true)
+@Component(service = arrayOf(AcmePrimeGreeter::class))
 class AcmePrimeGreeterDefault: AcmePrimeGreeter {
 
   override fun greet() {

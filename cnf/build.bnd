@@ -1,5 +1,0 @@
-src=src/main/kotlin
-bin=target/classes
-testsrc=src/test/kotlin
-testbin=target/test-classes
-target-dir=target
