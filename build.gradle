@@ -95,18 +95,16 @@ task(buildKaraf) {
     exec {
       def context = "src/docker"
       def dockerFile = "src/docker/Karaf.Dockerfile"
-      commandLine = arrayListOf("docker", "build", "-t", karafDockerImageName, "-f", dockerFile, context)
+      commandLine = ["docker", "build", "-t", karafDockerImageName, "-f", dockerFile, context]
     }
     runKaraf.execute()
-    println("hello")
     exec {
-      println("hello2")
-      commandLine = arrayListOf("docker", "exec", "-t", karafDockerContainerName, "/opt/karaf/wait-for-karaf-start.sh")
+      commandLine = ["docker", "exec", "-t", karafDockerContainerName, "/opt/karaf/wait-for-karaf-start.sh"]
     }
     exec {
-      println("hello3")
-      commandLine = arrayListOf("docker", "exec", "-t", karafDockerContainerName, "/opt/karaf/karaf-features-install.sh")
+      commandLine = ["docker", "exec", "-t", karafDockerContainerName, "/opt/karaf/karaf-features-install.sh"]
     }
+    stopKaraf.execute()
   }
 }
 

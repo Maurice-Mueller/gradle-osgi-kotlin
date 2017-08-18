@@ -8,6 +8,6 @@ JACKSON_VERSION="2.8.5"
 ./client feature:repo-add cxf $CXF_VERSION
 ./client feature:install http cxf-jaxrs cxf
 ./client feature:repo-add mvn:org.code-house.jackson/features/$JACKSON_VERSION/xml/features
-./client feature:install jackson-jaxrs-json-provider jetty
+#./client feature:install jackson-jaxrs-json-provider jetty
 #./client bundle:install -s wrap:mvn:org.jetbrains.kotlin/kotlin-osgi-bundle/1.1.4
-./client bundle:install -s mvn:org.jetbrains.kotlin/kotlin-osgi-bundle/1.1.4
+./client "bundle:install -s mvn:org.jetbrains.kotlin/kotlin-osgi-bundle/1.1.4"
