@@ -8,7 +8,7 @@ import org.osgi.service.component.annotations.Reference
 @Component
 class AcmePrimeGreeterConsumer {
 
-  @Reference
+  @Reference(service = AcmePrimeGreeter::class)
   private var greeter: AcmePrimeGreeter? = null
 
   @Activate
