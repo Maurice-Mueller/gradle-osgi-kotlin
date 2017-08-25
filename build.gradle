@@ -43,6 +43,7 @@ allprojects {
     compile("org.apache.cxf:cxf-rt-transports-http-jetty:${cxfVersion}")
     compile("org.apache.cxf:cxf-rt-rs-client:${cxfVersion}")
     compile("com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:${jacksonVersion}")
+    compile("com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}")
     compile("org.osgi:org.osgi.core:${osgiVersion}")
     compile("org.osgi:osgi.cmpn:${osgiVersion}")
     testCompile("org.jetbrains.kotlin:kotlin-test:${kotlinVersion}")
@@ -79,7 +80,7 @@ def runKaraf = task("runKaraf", type:Exec) {
 
   println("Did you mean: startKaraf?")
 
-  def exposedPorts = ["1099", "8101", "8181", "44444"]
+  def exposedPorts = ["1099", "8101", "8181", "44444", "80", "8080"]
 
   def portParameters = []
   exposedPorts.forEach {
@@ -87,7 +88,11 @@ def runKaraf = task("runKaraf", type:Exec) {
     portParameters.add(it)
   }
 
-  commandLine = ["docker", "run", "-d", "--name", karafDockerContainerName, "-p", "1099:1099", karafDockerImageName]
+  def commandLineArray = ["docker", "run", "--net=host", "-d", "--name", karafDockerContainerName]
+  commandLineArray += portParameters
+  commandLineArray += karafDockerImageName
+
+  commandLine = commandLineArray
 }
 
 task(buildKaraf) {
@@ -133,8 +138,9 @@ project(":service") {
   task bundle(type: Bundle) {
     from sourceSets.main.output
     sourceSet = sourceSets.main
-    bnd = 'Import-Package: !kotlin, !kotlin.*, *\n' +
-          'Export-Package: !kotlin, com.acme.prime.services\n' +
+    bnd = 'Import-Package: *\n' +
+          'Export-Package: !kotlin, com.example.microservice.service\n' +
+          'Export-Package: !kotlin, com.example.microservice.api\n' +
           '-output: build/libs/test.jar'
   }
 }
