@@ -14,6 +14,5 @@ JACKSON_VERSION="2.9.0"
 ./client "bundle:install -s mvn:com.fasterxml.jackson.core/jackson-databind/"$JACKSON_VERSION
 ./client "bundle:install -s mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/"$JACKSON_VERSION
 ./client "bundle:install -s mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/"$JACKSON_VERSION
-#./client bundle:install -s wrap:mvn:org.jetbrains.kotlin/kotlin-osgi-bundle/1.1.4
 ./client "bundle:install -s mvn:org.jetbrains.kotlin/kotlin-osgi-bundle/1.1.4"
 ./client "bundle:install -s mvn:com.fasterxml.jackson.module/jackson-module-kotlin/"$JACKSON_VERSION
